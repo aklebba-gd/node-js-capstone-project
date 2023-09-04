@@ -1,3 +1,8 @@
 # Exercise Tracker
 
-This is the boilerplate for the Exercise Tracker project. Instructions for building your project can be found at https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/exercise-tracker
+## How to launch
+
+1. Clone this repository
+2. `cd node-course-task`
+3. `npm install`
+4. `npm start`
