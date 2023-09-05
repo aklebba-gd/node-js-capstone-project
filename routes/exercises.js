@@ -59,14 +59,14 @@ router.get('/api/users/:_id/logs', (req, res) => {
   const { _id } = req.params;
   const { from, to, limit } = req.query;
 
-  if (from && isNaN(Date.parse(from))) {
+  if (from !== undefined && isNaN(Date.parse(from))) {
     return res.status(400).json({ error: 'from query param is invalid. It must be a date' });
   }
-  if (to && isNaN(Date.parse(to))) {
+  if (to !== undefined && isNaN(Date.parse(to))) {
     return res.status(400).json({ error: 'to query param is invalid. It must be a date' });
   }
   if (limit !== undefined) {
-    if (isNaN(limit) || parseInt(limit) < 0 || limit === '') {
+    if (isNaN(limit) || parseInt(limit) < 0 || limit.trim() === '') {
       return res.status(400).json({ error: 'Limit must be a positive integer' });
     }
   }
