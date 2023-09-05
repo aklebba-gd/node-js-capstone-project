@@ -59,6 +59,18 @@ router.get('/api/users/:_id/logs', (req, res) => {
   const { _id } = req.params;
   const { from, to, limit } = req.query;
 
+  if (from && isNaN(Date.parse(from))) {
+    return res.status(400).json({ error: 'from query param is invalid. It must be a date' });
+  }
+  if (to && isNaN(Date.parse(to))) {
+    return res.status(400).json({ error: 'to query param is invalid. It must be a date' });
+  }
+  if (limit !== undefined) {
+    if (isNaN(limit) || parseInt(limit) < 0 || limit === '') {
+      return res.status(400).json({ error: 'Limit must be a positive integer' });
+    }
+  }
+
   const selectById = db.prepare(`SELECT * FROM users WHERE id = ?`);
   const user = selectById.get(_id);
   if (!user) {
@@ -76,6 +88,8 @@ router.get('/api/users/:_id/logs', (req, res) => {
     sql += ` AND date <= ?`;
     params.push(to);
   }
+
+  sql += ` ORDER BY date`;
 
   const selectExercises = db.prepare(sql);
 
